@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'microsoft'
+          distribution: 'adopt'
 
       - name: Build with Maven
         run: mvn clean install -f server/pom.xml
@@ -37,8 +37,8 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
+    # permissions:
+    #   id-token: write #This is required for requesting the JWT
   
     steps:
       - name: Download artifact from build job
