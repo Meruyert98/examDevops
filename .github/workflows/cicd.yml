@@ -26,7 +26,12 @@ jobs:
         working-directory: ./server
         run: |
           mvn clean install
-
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          
       - name: Build Frontend
         working-directory: ./client
         run: |
