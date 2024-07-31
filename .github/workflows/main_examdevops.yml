@@ -51,4 +51,4 @@ jobs:
           app-name: 'examdevops'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A2870C8F045A4BC289B18D1BF4DBBF31 }}
-          package: '*.war'
+          package: '*.jar'
