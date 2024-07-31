@@ -1,78 +1,78 @@
 export default async function Service(request, content) {
-  const url = 'http://localhost:8081';
-  const token = sessionStorage.getItem('token');
+  const url = "http://localhost:8081";
+  const token = sessionStorage.getItem("token");
   try {
-    if (request === 'sendInvaite') {
+    if (request === "sendInvaite") {
       const req = await fetch(`${url}/api/v1/user/add`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(content, null, 2),
         headers: {
-          'Content-Type': 'application/json',
-          Accept: '*/*',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          Accept: "*/*",
+          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`,
         },
       });
 
       if (req.ok) {
-        alert('Приглашение отправлено!');
+        alert("Приглашение отправлено!");
       }
     }
-    if (request === 'recover') {
+    if (request === "recover") {
       const req = await fetch(`${url}/api/v1/anketa/get`, {
-        method: 'GET',
+        method: "GET",
         headers: {
           // 'Content-Type': 'application/json',
-          Accept: '*/*',
-          'Access-Control-Allow-Origin': '*',
+          Accept: "*/*",
+          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`,
         },
       });
       if (!req.ok) {
-        alert('Анкеты с таким ИИН не найдено');
+        alert("Анкеты с таким ИИН не найдено");
       }
       const res = await req.json();
       // console.log(res);
       return res;
     }
-    if (request === 'save') {
+    if (request === "save") {
       const req = await fetch(`${url}/api/v1/anketa/submit`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(content, null, 2),
         headers: {
-          'Content-Type': 'application/json',
-          Accept: '*/*',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          Accept: "*/*",
+          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`,
         },
       });
       if (!req.ok) {
-        alert('Не удалось сохранить анкету');
+        alert("Не удалось сохранить анкету");
       }
-      alert('Анкета сохранена');
+      alert("Анкета сохранена");
     }
-    if (request === 'uploadForm') {
+    if (request === "uploadForm") {
       const req = await fetch(`${url}/api/v1/anketa/submit`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(content, null, 2),
         headers: {
-          'Content-Type': 'application/json',
-          Accept: '*/*',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          Accept: "*/*",
+          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`,
         },
       });
       // console.log(JSON.stringify(content, null, 2));
       return true;
     }
-    if (request === 'downloadForm') {
+    if (request === "downloadForm") {
       const req = await fetch(
         `${url}/api/v1/anketa/download-pdf/${content.iin}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            Accept: '*/*',
-            'Access-Control-Allow-Origin': '*',
+            Accept: "*/*",
+            "Access-Control-Allow-Origin": "*",
           },
           Authorization: `Bearer ${token}`,
         }
@@ -84,19 +84,19 @@ export default async function Service(request, content) {
       }
     }
 
-    if (request === 'uploadFiles') {
+    if (request === "uploadFiles") {
       for (const [fileName, file] of Object.entries(content.files)) {
         if (file) {
           const formData = new FormData();
-          formData.append('file', file);
+          formData.append("file", file);
 
           const req = await fetch(
             `${url}/api/v1/upload/file/${content.iin}/?type=${fileName}`,
             {
-              method: 'POST',
+              method: "POST",
               headers: {
-                Accept: '*/*',
-                'Access-Control-Allow-Origin': '*',
+                Accept: "*/*",
+                "Access-Control-Allow-Origin": "*",
                 Authorization: `Bearer ${token}`,
               },
               body: formData,
@@ -108,31 +108,31 @@ export default async function Service(request, content) {
       }
       return true;
     }
-    if (request === 'registration') {
+    if (request === "registration") {
       const req = await fetch(`${url}/api/v1/register`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(content, null, 2),
         headers: {
-          Accept: '*/*',
+          Accept: "*/*",
           // "Access-Control-Allow-Origin": "*",
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       const res = await req.json();
       if (!req.ok) {
         alert(res.Error);
       } else {
-        window.location = '/login';
+        window.location = "/login";
       }
     }
 
-    if (request === 'login') {
+    if (request === "login") {
       const req = await fetch(`${url}/api/v1/auth`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(content, null, 2),
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
           // "Access-Control-Allow-Origin": "*",
         },
       });
@@ -142,17 +142,17 @@ export default async function Service(request, content) {
         alert(reqJ.Error);
       }
       if (reqJ.token) {
-        sessionStorage.setItem('token', reqJ.token);
-        window.location = '/profile';
+        sessionStorage.setItem("token", reqJ.token);
+        window.location = "/profile";
       }
     }
-    if (request === 'applicationList') {
+    if (request === "applicationList") {
       const req = await fetch(`${url}/api/v1/anketa/all`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
+          Accept: "application/json",
           Authorization: `Bearer ${token}`,
-          'Access-Control-Allow-Origin': '*',
+          "Access-Control-Allow-Origin": "*",
         },
       });
       if (req.ok) {
@@ -160,11 +160,11 @@ export default async function Service(request, content) {
         return res;
       }
     }
-    if (request === 'HR') {
+    if (request === "HR") {
       const req = await fetch(`${url}/api/v1/download/zip/${content}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
+          Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -172,13 +172,13 @@ export default async function Service(request, content) {
         window.open(req.url);
       }
     }
-    if (request === 'SB') {
+    if (request === "SB") {
       const req = await fetch(
         `${url}/api/v1/download/sb/zip/${content}?types=residentCard,form,medDoc`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            Accept: 'application/json',
+            Accept: "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
@@ -229,23 +229,23 @@ export default async function Service(request, content) {
       //   });
       // }
     }
-    if (request === 'deleteUser') {
+    if (request === "deleteUser") {
       const req = await fetch(`${url}/api/v1/anketa/delete/${content}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          Accept: '*/*',
+          Accept: "*/*",
           Authorization: `Bearer ${token}`,
-          'Access-Control-Allow-Origin': '*',
+          "Access-Control-Allow-Origin": "*",
         },
       });
     }
-    if (request === 'getProfile') {
+    if (request === "getProfile") {
       const req = await fetch(`${url}/api/v1/profile/get`, {
-        method: 'GET',
+        method: "GET",
 
         headers: {
-          Accept: 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -255,14 +255,14 @@ export default async function Service(request, content) {
       const res = await req.json();
       return res;
     }
-    if (request === 'uploadProfile') {
+    if (request === "uploadProfile") {
       const req = await fetch(`${url}/api/v1/profile/submit`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(content, null, 2),
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`,
         },
       });
