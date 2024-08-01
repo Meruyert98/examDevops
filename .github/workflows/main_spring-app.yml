@@ -26,7 +26,7 @@ jobs:
         run: mvn clean install -f server/pom.xml
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: java-app
           path: '${{ github.workspace }}'
@@ -43,9 +43,11 @@ jobs:
   
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: java-app
+          path: target/
+
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -60,5 +62,5 @@ jobs:
         with:
           app-name: 'spring-app'
           slot-name: 'Production'
-          package: '*.jar'
+          package: 'target/*.jar'
           
