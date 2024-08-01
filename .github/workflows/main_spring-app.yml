@@ -46,7 +46,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-app
-          path: target/
+          # path: target/
 
       
       - name: Login to Azure
@@ -62,5 +62,5 @@ jobs:
         with:
           app-name: 'spring-app'
           slot-name: 'Production'
-          package: 'target/*.jar'
+          package: '*.jar'
           
