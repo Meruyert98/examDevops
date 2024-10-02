@@ -37,5 +37,7 @@ public class UserService {
             }
         }
         return null;
+        // throw new NoSuchElementException("User not found with username");
+
     }
 }
